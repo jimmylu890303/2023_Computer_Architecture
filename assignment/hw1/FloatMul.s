@@ -7,7 +7,7 @@ main:
     li a1, 0xc2930000
     jal float32_mul
     
-    li a7,34
+    li a7,34 # 0xc5664300
     ecall
     j End
     
@@ -16,7 +16,7 @@ main:
 # Input:
 # a0: float a
 # a1: float b
-# Outpu:
+# Output:
 # a0: float result
 
 float32_mul:
@@ -29,7 +29,7 @@ float32_mul:
     # load float a & float b
     mv s0, a0
     mv s1, a1
-    li s2, 0         # init result
+    li s2, 0          # init result
     
     # /*    1. deal with Sign    */
     li t0, 0x80000000
@@ -112,6 +112,7 @@ float32_mul:
     addi sp, sp, 16
 
     ret
+
 #############################################################
 # /*    unsign 32bit multiplier    */
 # Input:
@@ -137,7 +138,7 @@ unsign32_mul:
     li t1, 0   # upper 32 bit
 
     # Initialize loop counter
-    li t2, 32  # loop counter
+    li t2, 24  # loop counter
     li t6, 0   # shift counter
 
     # Loop to perform multiplication
