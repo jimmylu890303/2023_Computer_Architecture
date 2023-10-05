@@ -24,25 +24,6 @@ bf16mul:     .string "The value of BFloat16 mul is "
 # /*    main    */
 main:
     
-    # test function
-    jal ra, test
-    la a0, nextLine
-    li a7, 4
-    ecall
-    
-    # float32 mul
-    la a0, fp32mul
-    li a7, 4
-    ecall 
-    li a0, 0x42488000    # 50.125
-    li a1, 0xc2930000    # -73.5
-    jal float32_mul
-    li a7,34             # 0xc5664300 = -3684.1875
-    ecall
-    la a0, nextLine
-    li a7, 4
-    ecall 
-    
     # Convert same valuse from fp32 to bf16
     li a0, 0x42488000    # 50.125
     jal fp32_to_bf16
@@ -55,8 +36,8 @@ main:
     la a0, bf16mul
     li a7, 4
     ecall 
-    mv a0, s0    # 50.125
-    mv a1, s1    # -73.5
+    mv a0, s0            # 0x42490000
+    mv a1, s1            # 0xc2930000 
     jal bfloat16_mul
     li a7,34
     ecall
