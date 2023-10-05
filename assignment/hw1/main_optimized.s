@@ -285,7 +285,22 @@ unsign8_mul:
         bf16_no_add:
         srli s1, s1, 1   # right shift multiplier
         addi t6, t6, 1   # shift counter++
-        addi t2, t2, -1  # Decrement the loop counter
+        
+        mv t3, s0        # multiplicand
+        mv t4, s1        # multiplier
+
+        andi t5, t4, 1   # extract LSB from multiplier
+        
+        beqz t5, bf16_no_add1  # if LSB=0, skip addition
+        
+        sll t5, t3, t6   # left shift multiplicand with n bits (t6)
+        add t0, t0, t5   # lower 32bits = lower 32bits + left shifted multiplicand
+        
+        bf16_no_add1:
+        srli s1, s1, 1   # right shift multiplier
+        addi t6, t6, 1   # shift counter++
+
+        addi t2, t2, -2  # Decrement the loop counter
         bnez t2, bf16_mul_loop    # Continue the loop until all bits are processed
 
     # Store the final result in a0
