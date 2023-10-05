@@ -112,7 +112,7 @@ fp32_to_bf16:
     lw t0, 0(t0)
     beq s1, t0, returnX
     
-    # /*    Normalized number    */
+    # /*     Normalized number    */
     # /*     round to nearest    */
     # r = r / 256
     la t0, div_mask
