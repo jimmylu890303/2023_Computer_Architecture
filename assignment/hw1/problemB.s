@@ -34,7 +34,7 @@ main:
     li a0, 0x42488000    # 50.125
     li a1, 0xc2930000    # -73.5
     jal float32_mul
-    li a7,34             # -3684.1875
+    li a7,34             # 0xc5664300 = -3684.1875
     ecall
     la a0, nextLine
     li a7, 4
@@ -49,7 +49,7 @@ main:
     jal bfloat16_mul
     li a7,34
     ecall
-    la a0, nextLine      # 19.375
+    la a0, nextLine      # 0x419b0000 = 19.375
     li a7, 4
     ecall 
     
@@ -63,6 +63,7 @@ main:
 # a0 : 32 bit float but saved in 2's complement
 # Output
 # a0 : bf16
+
 fp32_to_bf16:
     # s0 = y = x
     # s1 = exp
@@ -131,12 +132,14 @@ fp32_to_bf16:
     lw ra, 0(sp)
     addi sp, sp, 20 
     ret
+
 #############################################################
 # /*    Check Input eql to Zero    */
 # Input 
 # a0 : number
 # Output 
 # a0 : 1 if eql to zero ,else 0
+
 checkZero:
     # if a0 == 0 go set flag
     beqz a0, setFlagtoOne
@@ -150,6 +153,7 @@ setFlagtoOne:
 #############################################################
 # /*    return the origin float number x    */ 
 # /*    When x= 0 or NaN    */ 
+
 returnX:
     lw ra, 0(sp)
     lw a0, 4(sp)
@@ -158,8 +162,10 @@ returnX:
     lw s2, 16(sp)
     addi sp, sp, 20
     ret
+
 #############################################################
 # /*    Test function    */
+
 test: 
     addi, sp, sp, -4
     sw ra, 0(sp)
@@ -242,22 +248,27 @@ loop:
 
 #############################################################
 # /*    Fail    */
+
 Fail:
      la a0, fail
      li a7, 4
      ecall
      j End
+
 #############################################################
 # /*    Pass    */
+
 Pass:
      la a0, pass
      li a7, 4
      ecall
      ret
+
 #############################################################
 # /*    print the  bf16 number    */ 
 # Input
 # a0 : number
+
 printBF16:
     mv t0, a0
     la a0, BF16
@@ -272,6 +283,7 @@ printBF16:
     li a7, 4
     ecall
     ret
+
 #############################################################
 # /*    print the 32 float number    */ 
 # Input
@@ -294,7 +306,7 @@ printFP32:
 # Input:
 # a0: float a
 # a1: float b
-# Outpu:
+# Output:
 # a0: float result
 
 float32_mul:
@@ -307,7 +319,7 @@ float32_mul:
     # load float a & float b
     mv s0, a0
     mv s1, a1
-    li s2, 0         # init result
+    li s2, 0          # init result
     
     # /*    1. deal with Sign    */
     li t0, 0x80000000
@@ -416,7 +428,7 @@ unsign32_mul:
     li t1, 0   # upper 32 bit
 
     # Initialize loop counter
-    li t2, 32  # loop counter
+    li t2, 24  # loop counter
     li t6, 0   # shift counter
 
     # Loop to perform multiplication
@@ -456,7 +468,7 @@ unsign32_mul:
 # Input:
 # a0: bfloat a
 # a1: bfloat b
-# Outpu:
+# Output:
 # a0: bfloat result
 
 bfloat16_mul:
@@ -469,7 +481,7 @@ bfloat16_mul:
     # load float a & float b
     mv s0, a0
     mv s1, a1
-    li s2, 0         # init result
+    li s2, 0          # init result
     
     # /*    1. deal with Sign    */
     li t0, 0x80000000
@@ -546,6 +558,7 @@ bfloat16_mul:
     addi sp, sp, 16
 
     ret
+
 #############################################################
 # /*    unsign 32bit multiplier    */
 # Input:
@@ -601,6 +614,7 @@ unsign8_mul:
     ret
 
 #############################################################
+
 End:
     # Exit program
     li a7, 10

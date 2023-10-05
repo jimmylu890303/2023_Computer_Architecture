@@ -16,7 +16,7 @@ main:
 # Input:
 # a0: bfloat a
 # a1: bfloat b
-# Outpu:
+# Output:
 # a0: bfloat result
 
 bfloat16_mul:
@@ -29,7 +29,7 @@ bfloat16_mul:
     # load float a & float b
     mv s0, a0
     mv s1, a1
-    li s2, 0         # init result
+    li s2, 0          # init result
     
     # /*    1. deal with Sign    */
     li t0, 0x80000000
@@ -106,6 +106,7 @@ bfloat16_mul:
     addi sp, sp, 16
 
     ret
+    
 #############################################################
 # /*    unsign 32bit multiplier    */
 # Input:
