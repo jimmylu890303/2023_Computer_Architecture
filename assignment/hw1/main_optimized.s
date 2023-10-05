@@ -85,17 +85,8 @@ fp32_to_bf16:
     and s2, s2, s0
     
     # /*     zero     */
-    # Check if exp==0 , t0 = 1, else t0 = 0
-    mv a0, s1
-    jal ra, checkZero
-    mv t0, a0
-    # Check if man==0 , t1 = 1, else t1 = 0
-    mv a0, s2
-    jal ra, checkZero
-    mv t1, a0
-    # Check if (exp==0 and man ==0) return X
-    and t2, t0, t1
-    bnez t2, returnX
+    or t0, s1, s2
+    beqz t0, returnX
     
     
     # /*     infinity or NaN     */
@@ -123,23 +114,6 @@ fp32_to_bf16:
     lw ra, 0(sp)
     addi sp, sp, 20 
     ret
-
-#############################################################
-# /*    Check Input eql to Zero    */
-# Input 
-# a0 : number
-# Output 
-# a0 : 1 if eql to zero ,else 0
-
-checkZero:
-    # if a0 == 0 go set flag
-    beqz a0, setFlagtoOne
-    # else 
-    li a0, 0
-    ret 
-setFlagtoOne:
-    li a0, 1
-    ret     
 
 #############################################################
 # /*    return the origin float number x    */ 
