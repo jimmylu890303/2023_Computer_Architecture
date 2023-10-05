@@ -26,6 +26,9 @@ main:
     
     # test function
     jal ra, test
+    la a0, nextLine
+    li a7, 4
+    ecall
     
     # float32 mul
     la a0, fp32mul
@@ -40,19 +43,26 @@ main:
     li a7, 4
     ecall 
     
+    # Convert same valuse from fp32 to bf16
+    li a0, 0x42488000    # 50.125
+    jal fp32_to_bf16
+    mv s0, a0
+    li a0, 0xc2930000    # -73.5
+    jal fp32_to_bf16
+    mv s1, a0
+    
     # bfloat16 mul
     la a0, bf16mul
     li a7, 4
     ecall 
-    li a0, 0x40b40000    # 5.630000
-    li a1, 0x405d0000    # 3.460000
+    mv a0, s0    # 50.125
+    mv a1, s1    # -73.5
     jal bfloat16_mul
     li a7,34
     ecall
-    la a0, nextLine      # 0x419b0000 = 19.375
+    la a0, nextLine      # 0xc5660000 = -3680.0
     li a7, 4
     ecall 
-    
     
     # Exit 
     j End
