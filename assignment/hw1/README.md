@@ -12,5 +12,13 @@
     - Add float32 mutiplication from FloatMul.s
     - Add bfloat16 mutiplication from BFloatMul.s
 - main_optimized.s
-    - optimize fp32_to_bf16 function
-    - optimize bfloat16 mutiplication
+    - optimize fp32_to_bf16 function(reduce jump instructions)
+    - optimize bfloat16 mutiplication(loop unrolling)
+
+# About my branch
+
+- [Implemente float32 multiplication (predefined data) in main.s](https://github.com/jimmylu890303/2023_Computer_Architecture/blob/float32-mul-branch/assignment/hw1/main.s)
+
+- [Implemente bfloat16 multiplication (predefined data) in main.s](https://github.com/jimmylu890303/2023_Computer_Architecture/blob/bfloat16-mul/assignment/hw1/main.s)
+
+- [Implemente bfloat16 multiplication (using fp32_to_bf16 to convert fp32 to bf16) in main.s](https://github.com/jimmylu890303/2023_Computer_Architecture/blob/convert-float-and-bloat16-mul/assignment/hw1/main.s)
