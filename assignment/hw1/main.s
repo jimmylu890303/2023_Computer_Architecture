@@ -91,14 +91,14 @@ fp32_to_bf16:
 
     # Get actuall exp bit in s1
     # Load exp mask
-    la s1 exp_mask
+    la s1, exp_mask
     lw s1, 0(s1)
     # Get exp bit
     and s1, s1, s0
     
     # Get actuall man bit in s2
     # Load man mask
-    la s2 man_mask
+    la s2, man_mask
     lw s2, 0(s2)
     # Get man bit
     and s2, s2, s0
