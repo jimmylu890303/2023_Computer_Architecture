@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+  51608	   1928	   1548	  55084	   d72c	main_O1.elf

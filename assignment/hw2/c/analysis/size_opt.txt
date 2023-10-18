@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+   8026	   1424	    860	  10310	   2846	main_opt.elf

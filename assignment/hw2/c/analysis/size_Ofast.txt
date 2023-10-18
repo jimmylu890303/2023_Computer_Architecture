@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+  52258	   1928	   1548	  55734	   d9b6	main_Ofast.elf
