@@ -1,0 +1,2 @@
+   text	   data	    bss	    dec	    hex	filename
+  52564	   1928	   1548	  56040	   dae8	main_O0.elf
