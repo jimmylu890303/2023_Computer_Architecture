@@ -104,7 +104,7 @@ main_loop:
     # print cycle
     li a0, 1
     la a1, buffer
-    la a2, 5
+    li a2, 5
     li a7, SYSWRITE
     ecall
 
